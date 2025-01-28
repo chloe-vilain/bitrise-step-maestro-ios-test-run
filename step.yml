@@ -13,7 +13,8 @@ summary: |
   Runs Maestro Flows on iOS Simulator
 description: |
   This steps runs your Maestro Flows on iOS Simulator and exports a test report and a video recording.
-    This step does not give any output but puts test results in deploy folder if requested.
+    By default, this step does not give any output but puts test results in deploy folder if requested.
+    If `should_exit_on_fail` is set to true, the step will exit with the status of the test run after the test run finishes.
 website: https://github.com/fepersembe/bitrise-step-maestro-ios-test-run.git
 source_code_url: https://github.com/fepersembe/bitrise-step-maestro-ios-test-run.git
 support_url: https://github.com/fepersembe/bitrise-step-maestro-ios-test-run.git/issues
@@ -105,5 +106,15 @@ inputs:
       title: "Maestro CLI version"
       summary: "Maestro CLI version to be downloaded in your CI (Default: latest)"
       description: ""
+      is_expand: true
+      is_required: false
+  - should_exit_on_fail: "false"
+    opts:
+      title: "Fail step on test failure"
+      summary: "Step returns a failed state if any tests fail"
+      description: "If true, the step will exit with the status of the test run after the test run finishes. If false, the step will not fail if the test run fails."
+      value_options:
+        - "true"
+        - "false"
       is_expand: true
       is_required: false

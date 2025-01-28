@@ -23,7 +23,8 @@ maestro -v
 # Run Maestro Cloud
 xcrun simctl install booted $app_file
 xcrun simctl io booted recordVideo --codec=h264 -f $BITRISE_DEPLOY_DIR/ui_tests.mp4 &
-maestro test $workspace/ --format junit --output $BITRISE_DEPLOY_DIR/test_report.xml $additional_params || true
+maestro test $workspace/ --format junit --output $BITRISE_DEPLOY_DIR/test_report.xml $additional_params
+test_exit_status=$?
 killall -SIGINT simctl
 
 # Export test results
@@ -35,4 +36,8 @@ if [[ "$is_export" == "true" ]]; then
     cp $BITRISE_DEPLOY_DIR/test_report.xml "$test_run_dir/maestro_report.xml"
     cp $BITRISE_DEPLOY_DIR/ui_tests.mp4 "$test_run_dir/ui_tests.mp4"
     echo '{"maestro-test-report":"Maestro Cloud Flows"}' >> "$test_run_dir/test-info.json"
+fi
+
+if [[ "$should_exit_on_fail" == "true" ]]; then
+    exit $test_exit_status
 fi
