@@ -24,6 +24,11 @@ maestro -v
 xcrun simctl install booted $app_file
 xcrun simctl io booted recordVideo --codec=h264 -f $BITRISE_DEPLOY_DIR/ui_tests.mp4 &
 maestro test $workspace/ --format junit --output $BITRISE_DEPLOY_DIR/test_report.xml $additional_params
+maestro_pid=$!
+
+# Wait for Maestro to finish
+wait $maestro_pid
+
 test_exit_status=$?
 killall -SIGINT simctl
 
