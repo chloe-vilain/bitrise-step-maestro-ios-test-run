@@ -38,6 +38,14 @@ if [[ "$is_export" == "true" ]]; then
     echo '{"maestro-test-report":"Maestro Cloud Flows"}' >> "$test_run_dir/test-info.json"
 fi
 
-if [[ "$should_exit_on_fail" == "true" ]]; then
+if [ "$should_exit_on_fail" = "true" ]; then
+    echo "Should exit on fail is true"
+    echo "Should exit on fail: $should_exit_on_fail"
+    echo "Test exit status: $test_exit_status"
     exit $test_exit_status
 fi
+
+echo "Should exit on fail is false"
+echo "Should exit on fail: $should_exit_on_fail"
+echo "Test exit status: $test_exit_status"
+exit 0
